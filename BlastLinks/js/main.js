@@ -39,20 +39,29 @@ define(
 			browser.afterMilestone('completely initialized', function(){
 				console.log('BlastLinks plugin starting');
 					// Initialize the data into a datastructure which we'll access later.
+                    var button = browser.addGlobalMenuItem('Links',
+                        new dijitMenuItem({
+						    label: "Blast amaizing",
+                            id: "buttonlinks",
+						    onClick: function(event){
+                                window.open("https://urgi.versailles.inra.fr/blast_amaizing");
+                            }
+					}));
+                    //button.domNode.className += " buttonlinks"
+                    //button.domNode.style.float = 'left'
 
-					var button = new dijitButton({
-						label: "Links",
-                        id: "buttonlinks",
-						onClick: function(event){
-                            window.open("https://urgi.versailles.inra.fr/blast_amaizing");
-                        }
-					});
-                    button.domNode.className += " buttonlinks"
-                    button.domNode.style.float = 'left'
-
-                    // browser.renderGlobalMenu( 'Links', {text: 'Links'}, browser.menuBar );
-					browser.menuBar.appendChild(button.domNode);
-				});
+                    browser.renderGlobalMenu( 'Links', {text: 'Links'}, browser.menuBar );
+					//browser.menuBar.appendChild(button.domNode);
+			});
+            var linksURGI = new dijitMenuItem(
+                {
+                    label: "URGI",
+                    onClick: function(event) {
+                        window.open('https://urgi.versailles.inra.fr/')
+                    }
+                }
+            );
+            browser.addGlobalMenuItem('Links', linksURGI);
             // var toolsMenu = dijit.
             // var helpMenu = dijit.get('dropdownbutton_help');
             // domConstruct.place(toolsMenu.domNode,helpMenu.domNode,'before');
