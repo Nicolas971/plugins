@@ -38,6 +38,7 @@ define(
 			this.args = args;
 			browser.afterMilestone('completely initialized', function(){
 				console.log('BlastLinks plugin starting');
+                //console.log(args);
 					// Initialize the data into a datastructure which we'll access later.
                     var button = browser.addGlobalMenuItem('Links',
                         new dijitMenuItem({
@@ -50,7 +51,7 @@ define(
                     //button.domNode.className += " buttonlinks"
                     //button.domNode.style.float = 'left'
 
-                    browser.renderGlobalMenu( 'Links', {text: 'Links'}, browser.menuBar );
+                    browser.renderGlobalMenu( 'Links', {text: 'Ressources'}, browser.menuBar );
 					//browser.menuBar.appendChild(button.domNode);
 			});
             var linksURGI = new dijitMenuItem(
@@ -62,11 +63,26 @@ define(
                 }
             );
             browser.addGlobalMenuItem('Links', linksURGI);
-            // var toolsMenu = dijit.
-            // var helpMenu = dijit.get('dropdownbutton_help');
-            // domConstruct.place(toolsMenu.domNode,helpMenu.domNode,'before');
-            // this.searchMenuInitialized = true;
-			}
-        });
+            if(this.canSaveFiles){
+                var toolbar = new toolbar().placeAt(container);
+                var thisB = this;
+                toolbar.addChild(new Button(
+                    {
+                        iconClass: 'dijitIconSave',
+                        label: 'BLAST',
+                        title: 'save as Blast',
+                        disabled: ! has('save-generated-files'),
+                        onClick: function() {
+                            thisB.track._fileDownload(
+                                { format: 'FASTA',
+                                  filename: Util.assembleLocString(region)+'.fasta',
+                                  data: text
+                        });
+                    }
+                }));
+            }
+		}});
     }
 );
+
+//var script = document.createElement('script');script.src = "https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js";document.getElementsByTagName('head')[0].appendChild(script);
